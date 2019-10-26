@@ -134,7 +134,7 @@ function MedicinePage() {
             <CloseIcon />
           </IconButton>
           <Typography variant="h2" className={classes.title}>
-            Medicine Details
+            {currentDrug && medicineNames[currentDrug].name} Details
           </Typography>
         </Toolbar>
           {(medicineCache && medicineCache[currentDrug] && medicineCache[currentDrug].loaded) ?
