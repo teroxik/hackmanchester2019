@@ -37,12 +37,20 @@ const hasVoted = async (voteNumber) => {
 
 }
 
-
 const sendText = async (to, content) => {
     return await got(`https://api.clockworksms.com/http/send.aspx?key=${CLOCKWORK_API_KEY}&to=${to}&content=${content}`);
 }
 
+const sendVoteText = async (to) => {
+    return sendText(to, "V");
+}
+
+const sendTakePillText = async (to, pillNumber) => {
+    return await sendText(to, `T${pillNumber}`);
+}
+
 module.exports = {
-    sendText,
+    sendVoteText,
+    sendTakePillText,
     handleText
 }
