@@ -38,15 +38,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const medicineNames =     {
-  alogliptin: {
-    name: 'Alogliptin',
-  },
-  cyclizine: {
-    name: 'Cyclizine',
-  }
-};
-
 
 
 function MedicinePage() {
@@ -94,22 +85,47 @@ function MedicinePage() {
             'paddingTop':'50px', 
             'paddingBottom': '50px', 
             }}>
-            {medicineNames[props.drug].name}
+            {props.drug.charAt(0).toUpperCase() + props.drug.substring(1)}
           </Paper>
         </Grid>
     </React.Fragment>
     )
   }
 
-  function FormRow() {
+  function FormRow(props) {
     return (
       <React.Fragment>
-        <FormItem drug={'alogliptin'} ></FormItem>
-        <FormItem drug={'cyclizine'}></FormItem>
-        <FormItem drug={'alogliptin'}></FormItem>
+        <FormItem drug={(props.drugData && props.drugData[0].name) || 'alogliptin'} ></FormItem>
+        <FormItem drug={(props.drugData && props.drugData[1].name) || 'cyclizine'}></FormItem>
+        <FormItem drug={(props.drugData && props.drugData[2].name) ||'alogliptin'}></FormItem>
       </React.Fragment>
     );
   }
+
+  
+  const GOOD = '😁';
+  const OK = '😐';
+  const BAD = '🤮';
+  
+  const drugList = [
+    'atenolol',
+    'alogliptin',
+    'cyclizine',
+    'azithromycin',
+    'clobetasone',
+    'heparinoid',
+    'olmesartan',
+    'pravastatin'
+  ]
+  const pickRandomDrug = () => {
+    const name = drugList[Math.floor(Math.random()*drugList.length)];
+    return{
+      name
+    };
+  }
+  const drugData1 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
+  const drugData2 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
+  const drugData3 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
 
   return (
 
@@ -119,7 +135,7 @@ function MedicinePage() {
       <div style={{'marginTop': '1em'}}></div>
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
-          <FormRow />
+          <FormRow drugData={drugData1}/>
         </Grid>
         <Grid container item xs={12} spacing={3}>
           <FormRow />
@@ -134,7 +150,7 @@ function MedicinePage() {
             <CloseIcon />
           </IconButton>
           <Typography variant="h2" className={classes.title}>
-            {currentDrug && medicineNames[currentDrug].name} Details
+            {currentDrug && (currentDrug.charAt(0).toUpperCase() + currentDrug.substring(1))} Details
           </Typography>
         </Toolbar>
           {(medicineCache && medicineCache[currentDrug] && medicineCache[currentDrug].loaded) ?
