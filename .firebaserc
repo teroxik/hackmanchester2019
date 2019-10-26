@@ -1,0 +1,36 @@
+{
+  "projects": {
+    "default": "hackmanchester2019",
+    "master": "hackmanchester2019",
+    "prod": "hackmanchester2019"
+  },
+  "ci": {
+    "copyVersion": true,
+    "createConfig": {
+      "master": {
+        "env": "staging",
+        "firebase": {
+          "apiKey": "${STAGE_FIREBASE_API_KEY}",
+          "authDomain": "hackmanchester2019.firebaseapp.com",
+          "databaseURL": "https://hackmanchester2019.firebaseio.com",
+          "projectId": "hackmanchester2019",
+          "storageBucket": "hackmanchester2019.appspot.com"
+        },
+        "sentryDsn": "${SENTRY_DSN}",
+        "analyticsTrackingId": "${GA_TRACKING_ID}"
+      },
+      "prod": {
+        "env": "production",
+        "firebase": {
+          "apiKey": "${PROD_FIREBASE_API_KEY}",
+          "authDomain": "hackmanchester2019.firebaseapp.com",
+          "databaseURL": "https://hackmanchester2019.firebaseio.com",
+          "projectId": "hackmanchester2019",
+          "storageBucket": "hackmanchester2019.appspot.com"
+        },
+        "sentryDsn": "${SENTRY_DSN}",
+        "analyticsTrackingId": "${GA_TRACKING_ID}"
+      }
+    }
+  }
+}
