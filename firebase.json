@@ -14,9 +14,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      "jsconfig.json",
-      "cypress/**"
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
@@ -38,6 +36,7 @@
       "src",
       "scripts/**",
       "jsconfig.json"
-    ]
+    ],
+    "source": "functions"
   }
 }
