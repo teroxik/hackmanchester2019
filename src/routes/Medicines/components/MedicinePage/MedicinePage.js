@@ -38,19 +38,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const medicineNames =     {
+  alogliptin: {
+    name: 'Alogliptin',
+  },
+  cyclizine: {
+    name: 'Cyclizine',
+  }
+};
+
+
 
 function MedicinePage() {
   const classes = useStyles();
-  const [medicineCache, setMedicineData] = useState(
-    {
-      alogliptin: {
-        name: 'Alogliptin',
-      },
-      cyclizine: {
-        name: 'Cyclizine',
-      }
-    }
-  );
+  const [medicineCache, setMedicineData] = useState({});
 
   const [open, setOpen] = React.useState(false);
   const [currentDrug, setCurrentDrug] = React.useState(null);
@@ -65,11 +66,24 @@ function MedicinePage() {
   };
 
   useEffect(() => {
+    if (!currentDrug){
+      return;
+    } 
+    if(medicineCache[currentDrug]){
+      return;
+    }
     doNHSCall(currentDrug).then(result => {
-      const updatedData = Object.assign(medicineCache[currentDrug], {loaded: true}, result);
-      setMedicineData(Object.assign(medicineCache, {[currentDrug]: updatedData}))
+      if (!result){
+        return;
+      }
+    
+    setMedicineData(m => {
+      const currentDrugData = m[currentDrug] || {};
+      const obj = Object.assign({}, result);
+      const updatedData = Object.assign({}, currentDrugData, obj, {loaded: true});
+      return {[currentDrug]: {...updatedData, loaded: true}, ...m}});
     });
-  }, [currentDrug]);
+  }, [currentDrug, medicineCache]);
   
 
   function FormItem(props) {
@@ -80,7 +94,7 @@ function MedicinePage() {
             'paddingTop':'50px', 
             'paddingBottom': '50px', 
             }}>
-            {medicineCache[props.drug].name}
+            {medicineNames[props.drug].name}
           </Paper>
         </Grid>
     </React.Fragment>
@@ -123,12 +137,30 @@ function MedicinePage() {
             Medicine Details
           </Typography>
         </Toolbar>
-          {JSON.stringify(medicineCache)}
-          {(medicineCache[currentDrug] && medicineCache[currentDrug].loaded) ?
-            <Typography variant="body1" className={classes.body1} style={{paddingLeft:'2em'}}>
-              {JSON.stringify(medicineCache[currentDrug])}
-            </Typography>
-            :
+          {(medicineCache && medicineCache[currentDrug] && medicineCache[currentDrug].loaded) ?
+          <div>
+          <Typography variant="h6" 
+            className={classes.title} 
+            dangerouslySetInnerHTML={{__html: medicineCache[currentDrug].mainEntityOfPage[0].mainEntityOfPage[0].text}}
+            style={{'marginLeft': '3em'}}
+            >
+          </Typography>
+          <Typography variant="h6" 
+          className={classes.title} 
+          dangerouslySetInnerHTML={{__html: medicineCache[currentDrug].mainEntityOfPage[1].mainEntityOfPage[0].text}}
+          style={{'marginLeft': '3em'}}
+          >
+        </Typography>
+        <Typography variant="h6" 
+          className={classes.title} 
+          dangerouslySetInnerHTML={{__html: medicineCache[currentDrug].mainEntityOfPage[2].mainEntityOfPage[0].text}}
+          style={{'marginLeft': '3em'}}
+          >
+        </Typography>
+
+        </div>
+        
+          :
           <div className={classes.root}>
             <div className={classes.progress}>
               <CircularProgress mode="indeterminate" size={80} />
