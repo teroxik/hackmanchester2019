@@ -42,21 +42,43 @@ const handleText = async message => {
 }
 
 const takenRightPod = async (podNumber, number) => {
-  const digest = { pod: podNumber, correctPod: true, timestamp: new Date() }
   const db = admin.firestore()
-  db.collection(`/patients/${number}/digests`).add(digest)
+  const docRef = db.collection('patients').doc(`${number}`)
+
+  return docRef.update({
+    [`taken${podNumber}`]: {
+      correct: true,
+      timestamp: new Date()
+    }
+  })
 }
 
 const takenWrongPod = async (podNumber, number) => {
-  const digest = { pod: podNumber, correctPod: false, timestamp: new Date() }
   const db = admin.firestore()
-  db.collection(`/patients/${number}/digests`).add(digest)
+  const docRef = db.collection('patients').doc(`${number}`)
+
+  return docRef.update({
+    [`taken${podNumber}`]: {
+      correct: false,
+      timestamp: new Date()
+    }
+  })
 }
 
 const hasVoted = async (voteNumber, number) => {
-  const vote = { vote: voteNumber, correctPod: false, timestamp: new Date() }
   const db = admin.firestore()
-  db.collection(`/patients/${number}/votes`).add(vote)
+  const docRef = db.collection('patients').doc(`${number}`)
+
+  docRef.get().then(doc => {
+    const patient = doc.data()
+    docRef.update({
+      [`vote${patient.lastPod}`]: {
+        vote: voteNumber,
+        timestamp: new Date()
+      },
+      lastPod: db.FieldValue.increment(1)
+    })
+  })
 }
 
 /**

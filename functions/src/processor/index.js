@@ -14,11 +14,25 @@ export async function processorRequest(req, res) {
     .collection(`/patients`)
     .get()
     .then(async snpsht => {
-      await snpsht.forEach(async doc => {
+      for (let doc of snpsht) {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data())
-        return sms.sendTakePillText(`+${doc.id}`, 0)
-      })
+        const patient = doc.data()
+        const lastPod = doc.lastPod
+        const number = `+${patient.number}`
+
+        if (lastPod || lastPod === 0) {
+          const medicine = doc[`taken${lastPod}`]
+          const vote = doc[`vote${lastPod}`]
+          if (!medicine) {
+           console.log('SendingT the sms')
+           await sms.sendTakePillText(number, lastPod)
+          } else if (!vote) {
+            console.log('Sending vote request')
+            await sms.sendVoteText(number)
+          }
+        }
+        console.log(doc.id, ' => ', patient)
+      }
     })
     .catch(function(error) {
       console.log('Error getting documents: ', error)
