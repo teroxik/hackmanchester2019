@@ -12,15 +12,25 @@ import { required } from 'utils/form'
 function NewPatientDialog({ classes, handleSubmit, open, onRequestClose }) {
   return (
     <Dialog open={open} onClose={onRequestClose}>
-      <DialogTitle id="new-patient-dialog-title">New Patient</DialogTitle>
+      <DialogTitle id="new-patient-dialog-title">New Patients Box</DialogTitle>
       <form onSubmit={handleSubmit} className={classes.inputs}>
         <DialogContent>
-          <Field
-            name="name"
-            component={TextField}
-            label="Patient Number"
-            validate={[required]}
-          />
+          <div>
+            <Field
+              name="name"
+              component={TextField}
+              label="Patient Box Name"
+              validate={[required]}
+            />
+          </div>
+          <div>
+            <Field
+              name="number"
+              component={TextField}
+              label="Patient Number"
+              validate={[required]}
+            />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={onRequestClose} color="secondary">

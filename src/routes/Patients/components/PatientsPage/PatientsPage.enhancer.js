@@ -56,8 +56,8 @@ export default compose(
         return showError('You must be logged in to create a patient')
       }
       return firestore
-        .add(
-          { collection: 'patients' },
+        .set(
+          { collection: 'patients', doc: newInstance.number },
           {
             ...newInstance,
             createdBy: uid,

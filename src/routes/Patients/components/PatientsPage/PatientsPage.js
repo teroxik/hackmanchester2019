@@ -46,7 +46,8 @@ function PatientsPage({
                 patients.map((patient, ind) => (
                   <PatientTile
                     key={`Panel-${patient.id}-${ind}`}
-                    name={patient.id}
+                    name={patient.name}
+                    number={patient.number}
                     onSelect={() => goToPatient(patient.id)}
                     onDelete={() => deletePatient(patient.id)}
                   />
