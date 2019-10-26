@@ -11,7 +11,7 @@ import got from 'got'
 async function schedulerEvent(context) {
   console.log('Pub Sub message: ', { context })
   // End function execution by returning
-  got('https://us-central1-hackmanchester2019.cloudfunctions.net/processor')
+  // got('https://us-central1-hackmanchester2019.cloudfunctions.net/processor')
   return null
 }
 
