@@ -27,6 +27,53 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+const GOOD = '😁';
+const OK = '😐';
+const BAD = '🤮';
+
+const drugList = [
+  'atenolol',
+  'alogliptin',
+  'cyclizine',
+  'azithromycin',
+  'clobetasone',
+  'heparinoid',
+  'olmesartan',
+  'pravastatin',
+  'propranolol',
+  'rosuvastatin',
+  'venlafaxine',
+  'warfarin',
+  'sitagliptin',
+  'saxagliptin',
+  'perindopril'
+];
+
+const feelingList = [
+  GOOD,
+  OK,
+  BAD
+];
+
+const pickRandomDrug = () => {
+  const name = drugList[Math.floor(Math.random()*drugList.length)];
+  const feeling = feelingList[Math.floor(Math.random()*feelingList.length)];
+
+  return{
+    name,
+    feeling
+  };
+}
+const drugData1 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugData2 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugData3 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugDataGrid = [
+  drugData1,
+  drugData2,
+  drugData3
+];
+
 const doNHSCall = async (drug) => {
   if (!drug){
     return;
@@ -95,37 +142,14 @@ function MedicinePage() {
   function FormRow(props) {
     return (
       <React.Fragment>
-        <FormItem drug={(props.drugData && props.drugData[0].name) || 'alogliptin'} ></FormItem>
-        <FormItem drug={(props.drugData && props.drugData[1].name) || 'cyclizine'}></FormItem>
-        <FormItem drug={(props.drugData && props.drugData[2].name) ||'alogliptin'}></FormItem>
+        {props.drugData && props.drugData.map(x => {
+          return <FormItem 
+            drug={x.name} 
+        ></FormItem>
+        })}
       </React.Fragment>
     );
   }
-
-  
-  const GOOD = '😁';
-  const OK = '😐';
-  const BAD = '🤮';
-  
-  const drugList = [
-    'atenolol',
-    'alogliptin',
-    'cyclizine',
-    'azithromycin',
-    'clobetasone',
-    'heparinoid',
-    'olmesartan',
-    'pravastatin'
-  ]
-  const pickRandomDrug = () => {
-    const name = drugList[Math.floor(Math.random()*drugList.length)];
-    return{
-      name
-    };
-  }
-  const drugData1 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
-  const drugData2 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
-  const drugData3 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
 
   return (
 
@@ -134,15 +158,11 @@ function MedicinePage() {
       My Medicines
       <div style={{'marginTop': '1em'}}></div>
       <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow drugData={drugData1}/>
+      {drugDataGrid.map(x => {
+        return <Grid container item xs={12} spacing={3}>
+          <FormRow drugData={x}/>
         </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
+      })}
       </Grid>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <Toolbar>
