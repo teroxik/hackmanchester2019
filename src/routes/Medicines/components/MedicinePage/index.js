@@ -1,4 +1,4 @@
-import ProjectPage from './MedicinePage'
+import MedicinePage from './MedicinePage'
 import enhance from './MedicinePage.enhancer'
 
-export default enhance(ProjectPage)
+export default enhance(MedicinePage)

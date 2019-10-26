@@ -9,7 +9,7 @@ import { UserIsAuthenticated } from 'utils/router'
 
 export default compose(
   // Set component display name (more clear in dev/error tools)
-  setDisplayName('EnhancedProjectPage'),
+  setDisplayName('MedicinePage'),
   // Redirect to /login if user is not logged in
   UserIsAuthenticated,
   // Add props.match
