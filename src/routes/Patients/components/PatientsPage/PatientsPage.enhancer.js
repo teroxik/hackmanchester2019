@@ -10,7 +10,7 @@ import { LIST_PATH } from 'constants/paths'
 
 export default compose(
   // Set component display name (more clear in dev/error tools)
-  setDisplayName('EnhancedProjectsPage'),
+  setDisplayName('EnhancedPatientsPage'),
   // redirect to /login if user is not logged in
   UserIsAuthenticated,
   // Map auth uid from state to props
@@ -21,16 +21,16 @@ export default compose(
   firestoreConnect(({ uid }) => [
     // Listener for projects the current user created
     {
-      collection: 'projects',
-      where: ['createdBy', '==', uid]
+      collection: 'patients'
+      // where: ['createdBy', '==', uid]
     }
   ]),
   // Map projects from state to props
   connect(({ firestore: { ordered } }) => ({
-    projects: ordered.projects
+    patients: ordered.patients
   })),
   // Show loading spinner while projects and collabProjects are loading
-  spinnerWhileLoading(['projects']),
+  spinnerWhileLoading(['patients']),
   // Add props.router
   withRouter,
   // Add props.showError and props.showSuccess
@@ -50,14 +50,14 @@ export default compose(
   ),
   // Add handlers as props
   withHandlers({
-    addProject: props => newInstance => {
+    addPatient: props => newInstance => {
       const { firestore, uid, showError, showSuccess, toggleDialog } = props
       if (!uid) {
-        return showError('You must be logged in to create a project')
+        return showError('You must be logged in to create a patient')
       }
       return firestore
         .add(
-          { collection: 'projects' },
+          { collection: 'patients' },
           {
             ...newInstance,
             createdBy: uid,
@@ -66,27 +66,27 @@ export default compose(
         )
         .then(() => {
           toggleDialog()
-          showSuccess('Project added successfully')
+          showSuccess('Patient added successfully')
         })
         .catch(err => {
           console.error('Error:', err) // eslint-disable-line no-console
-          showError(err.message || 'Could not add project')
+          showError(err.message || 'Could not add patient')
           return Promise.reject(err)
         })
     },
-    deleteProject: props => projectId => {
+    deletePatient: props => patientId => {
       const { firestore, showError, showSuccess } = props
       return firestore
-        .delete({ collection: 'projects', doc: projectId })
-        .then(() => showSuccess('Project deleted successfully'))
+        .delete({ collection: 'patients', doc: patientId })
+        .then(() => showSuccess('Patient deleted successfully'))
         .catch(err => {
           console.error('Error:', err) // eslint-disable-line no-console
-          showError(err.message || 'Could not delete project')
+          showError(err.message || 'Could not delete patient')
           return Promise.reject(err)
         })
     },
-    goToProject: ({ history }) => projectId => {
-      history.push(`${LIST_PATH}/${projectId}`)
+    goToPatient: ({ history }) => patientId => {
+      history.push(`${LIST_PATH}/${patientId}`)
     }
   })
 )

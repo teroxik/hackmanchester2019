@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import ContentAddCircle from '@material-ui/icons/AddCircle'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import styles from './NewProjectTile.styles'
+import styles from './NewPatientTile.styles'
 
 const useStyles = makeStyles(styles)
 
-function NewProjectTile({ onClick }) {
+function NewPatientTile({ onClick }) {
   const classes = useStyles()
 
   return (
@@ -17,8 +17,8 @@ function NewProjectTile({ onClick }) {
   )
 }
 
-NewProjectTile.propTypes = {
+NewPatientTile.propTypes = {
   onClick: PropTypes.func
 }
 
-export default NewProjectTile
+export default NewPatientTile
