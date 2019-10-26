@@ -5,7 +5,7 @@ import Home from './Home'
 import LoginRoute from './Login'
 import MedicineRoute from './Medicines'
 import SignupRoute from './Signup'
-import ProjectsRoute from './Projects'
+import PatientsRoute from './Patients'
 import AccountRoute from './Account'
 import NotFoundRoute from './NotFound'
 
@@ -17,7 +17,7 @@ export default function createRoutes(store) {
         {/* Build Route components from routeSettings */
         [
           AccountRoute,
-          ProjectsRoute,
+          PatientsRoute,
           SignupRoute,
           LoginRoute,
           MedicineRoute

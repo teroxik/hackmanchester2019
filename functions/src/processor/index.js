@@ -13,11 +13,11 @@ export async function processorRequest(req, res) {
   await db
     .collection(`/patients`)
     .get()
-    .then(snpsht => {
-      snpsht.forEach(async doc => {
+    .then(async snpsht => {
+      await snpsht.forEach(async doc => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, ' => ', doc.data())
-        return sms.sendVoteText(`+${doc.id}`)
+        return sms.sendTakePillText(`+${doc.id}`, 0)
       })
     })
     .catch(function(error) {

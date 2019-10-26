@@ -5,11 +5,11 @@ import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { makeStyles } from '@material-ui/core/styles'
-import styles from './ProjectTile.styles'
+import styles from './PatientTile.styles'
 
 const useStyles = makeStyles(styles)
 
-function ProjectTile({ name, onSelect, onDelete, showDelete }) {
+function PatientTile({ name, number, onSelect, onDelete, showDelete }) {
   const classes = useStyles()
 
   return (
@@ -26,19 +26,24 @@ function ProjectTile({ name, onSelect, onDelete, showDelete }) {
           </Tooltip>
         ) : null}
       </div>
+      <div>
+        <span className={classes.name} onClick={onSelect}>
+          {number || 'No Number'}
+        </span>
+      </div>
     </Paper>
   )
 }
 
-ProjectTile.propTypes = {
+PatientTile.propTypes = {
   name: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   onDelete: PropTypes.func,
   showDelete: PropTypes.bool
 }
 
-ProjectTile.defaultProps = {
+PatientTile.defaultProps = {
   showDelete: true
 }
 
-export default ProjectTile
+export default PatientTile

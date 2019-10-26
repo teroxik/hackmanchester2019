@@ -4,11 +4,11 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import styles from './ProjectPage.styles'
+import styles from './PatientPage.styles'
 
 const useStyles = makeStyles(styles)
 
-function ProjectPage({ project, projectId }) {
+function PatientPage({ patient, patientId }) {
   const classes = useStyles()
 
   return (
@@ -16,11 +16,11 @@ function ProjectPage({ project, projectId }) {
       <Card className={classes.card}>
         <CardContent>
           <Typography className={classes.title} component="h2">
-            {project.name || 'Project'}
+            {patient.name || 'Patient'}
           </Typography>
-          <Typography className={classes.subtitle}>{projectId}</Typography>
+          <Typography className={classes.subtitle}>{patientId}</Typography>
           <div style={{ marginTop: '10rem' }}>
-            <pre>{JSON.stringify(project, null, 2)}</pre>
+            <pre>{JSON.stringify(patient, null, 2)}</pre>
           </div>
         </CardContent>
       </Card>
@@ -28,9 +28,9 @@ function ProjectPage({ project, projectId }) {
   )
 }
 
-ProjectPage.propTypes = {
-  project: PropTypes.object.isRequired, // from enhancer (connect)
-  projectId: PropTypes.string.isRequired // from enhancer (withProps)
+PatientPage.propTypes = {
+  patient: PropTypes.object.isRequired, // from enhancer (connect)
+  patientId: PropTypes.string.isRequired // from enhancer (withProps)
 }
 
-export default ProjectPage
+export default PatientPage

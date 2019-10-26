@@ -35,5 +35,15 @@ service cloud.firestore {
         allow read, write: if isOwner(get(/databases/$(database)/documents/projects/$(projectId)));
       }
     }
+
+    match /patients/{patient} {
+      // Only projects you own can be viewed
+      allow read, write, create;
+      // allow read, update: if isOwner(resource);
+      // Rules apply to all child collections
+      match /{allChildren=**} {
+        allow read, write, create;
+      }
+    }
   }
 }

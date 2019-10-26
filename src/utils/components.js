@@ -28,9 +28,9 @@ export function spinnerWhile(condition) {
  * import firebaseConnect from 'react-redux-firebase/lib/firebaseConnect'
  *
  * const enhance = compose(
- *   firebaseConnect(() => ['projects']),
- *   connect(({ firebase: { data: { projects } } }) => ({ projects })),
- *   spinnerWhileLoading(['projects'])
+ *   firebaseConnect(() => ['patients']),
+ *   connect(({ firebase: { data: { patients } } }) => ({ patients })),
+ *   spinnerWhileLoading(['patients'])
  * )
  *
  * export default enhance(SomeComponent)

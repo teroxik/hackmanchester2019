@@ -1,9 +1,9 @@
 import { Loadable } from 'utils/components'
 
 export default {
-  path: ':projectId',
+  path: ':patientId',
   component: Loadable({
     loader: () =>
-      import(/* webpackChunkName: 'Project' */ './components/ProjectPage')
+      import(/* webpackChunkName: 'Patient' */ './components/PatientPage')
   })
 }
