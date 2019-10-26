@@ -76,7 +76,7 @@ const hasVoted = async (voteNumber, number) => {
         vote: voteNumber,
         timestamp: new Date()
       },
-      lastPod: db.FieldValue.increment(1)
+      lastPod: admin.FieldValue.increment(1)
     })
   })
 }
