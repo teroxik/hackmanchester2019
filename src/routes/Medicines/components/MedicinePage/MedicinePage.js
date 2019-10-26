@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import moment from 'moment';
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
@@ -26,6 +27,61 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
   },
 }));
+
+
+const GOOD = '😁';
+const OK = '😐';
+const BAD = '🤮';
+
+const drugList = [
+  'atenolol',
+  'alogliptin',
+  'cyclizine',
+  'azithromycin',
+  'clobetasone',
+  'heparinoid',
+  'olmesartan',
+  'pravastatin',
+  'propranolol',
+  'rosuvastatin',
+  'venlafaxine',
+  'warfarin',
+  'sitagliptin',
+  'saxagliptin',
+  'perindopril'
+];
+
+const feelingList = [
+  GOOD,
+  OK,
+  BAD
+];
+
+const pickRandomDrug = () => {
+  const name = drugList[Math.floor(Math.random()*drugList.length)];
+  const feeling = feelingList[Math.floor(Math.random()*feelingList.length)];
+  let takenAt = null;
+  if (Math.floor(Math.random() * 2) == 0){
+    const start = new Date().setDate(new Date().getDate() - 7);
+    const end = new Date();
+    takenAt = new Date(start + Math.random() * (end - start));  
+  }
+  const ret = {
+    name,
+    feeling,
+    takenAt
+  };
+  console.log(ret);
+  return ret;
+}
+const drugData1 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugData2 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugData3 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
+const drugDataGrid = [
+  drugData1,
+  drugData2,
+  drugData3
+];
 
 const doNHSCall = async (drug) => {
   if (!drug){
@@ -80,12 +136,22 @@ function MedicinePage() {
   function FormItem(props) {
     return (
     <React.Fragment>
-        <Grid item xs={4} onClick={handleClickOpen(props.drug)}>
+        <Grid item xs={4} onClick={handleClickOpen(props.drug.name)}>
           <Paper className={classes.paper} style={{
             'paddingTop':'50px', 
             'paddingBottom': '50px', 
+            'height': '100%'
             }}>
-            {props.drug.charAt(0).toUpperCase() + props.drug.substring(1)}
+            <div>
+              <p>{props.drug.name.charAt(0).toUpperCase() + props.drug.name.substring(1)}</p>
+              <p>{
+                props.drug.takenAt && 
+                <div>
+                  <p>I took it {moment(props.drug.takenAt).fromNow()}</p>
+                  <p>It made me feel {props.drug.feeling}</p>
+                </div>
+              }</p>
+            </div>
           </Paper>
         </Grid>
     </React.Fragment>
@@ -95,37 +161,14 @@ function MedicinePage() {
   function FormRow(props) {
     return (
       <React.Fragment>
-        <FormItem drug={(props.drugData && props.drugData[0].name) || 'alogliptin'} ></FormItem>
-        <FormItem drug={(props.drugData && props.drugData[1].name) || 'cyclizine'}></FormItem>
-        <FormItem drug={(props.drugData && props.drugData[2].name) ||'alogliptin'}></FormItem>
+        {props.drugData && props.drugData.map(x => {
+          return <FormItem 
+            drug={x} 
+        ></FormItem>
+        })}
       </React.Fragment>
     );
   }
-
-  
-  const GOOD = '😁';
-  const OK = '😐';
-  const BAD = '🤮';
-  
-  const drugList = [
-    'atenolol',
-    'alogliptin',
-    'cyclizine',
-    'azithromycin',
-    'clobetasone',
-    'heparinoid',
-    'olmesartan',
-    'pravastatin'
-  ]
-  const pickRandomDrug = () => {
-    const name = drugList[Math.floor(Math.random()*drugList.length)];
-    return{
-      name
-    };
-  }
-  const drugData1 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
-  const drugData2 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
-  const drugData3 = [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()];
 
   return (
 
@@ -134,15 +177,11 @@ function MedicinePage() {
       My Medicines
       <div style={{'marginTop': '1em'}}></div>
       <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow drugData={drugData1}/>
+      {drugDataGrid.map(x => {
+        return <Grid container item xs={12} spacing={3}>
+          <FormRow drugData={x}/>
         </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
-        </Grid>
+      })}
       </Grid>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <Toolbar>
