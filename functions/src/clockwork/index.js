@@ -8,6 +8,8 @@ import * as functions from 'firebase-functions'
  */
 export async function clockworkRequest(req, res) {
   // Write response to request to end function execution
+  console.log(JSON.stringify(req.query))
+  console.log('The data')
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
   res.end('Hello from clockwork')
 }
