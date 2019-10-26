@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import moment from 'moment';
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
@@ -59,11 +60,19 @@ const feelingList = [
 const pickRandomDrug = () => {
   const name = drugList[Math.floor(Math.random()*drugList.length)];
   const feeling = feelingList[Math.floor(Math.random()*feelingList.length)];
-
-  return{
+  let takenAt = null;
+  if (Math.floor(Math.random() * 2) == 0){
+    const start = new Date().setDate(new Date().getDate() - 7);
+    const end = new Date();
+    takenAt = new Date(start + Math.random() * (end - start));  
+  }
+  const ret = {
     name,
-    feeling
+    feeling,
+    takenAt
   };
+  console.log(ret);
+  return ret;
 }
 const drugData1 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
 const drugData2 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
@@ -127,12 +136,22 @@ function MedicinePage() {
   function FormItem(props) {
     return (
     <React.Fragment>
-        <Grid item xs={4} onClick={handleClickOpen(props.drug)}>
+        <Grid item xs={4} onClick={handleClickOpen(props.drug.name)}>
           <Paper className={classes.paper} style={{
             'paddingTop':'50px', 
             'paddingBottom': '50px', 
+            'height': '100%'
             }}>
-            {props.drug.charAt(0).toUpperCase() + props.drug.substring(1)}
+            <div>
+              <p>{props.drug.name.charAt(0).toUpperCase() + props.drug.name.substring(1)}</p>
+              <p>{
+                props.drug.takenAt && 
+                <div>
+                  <p>I took it {moment(props.drug.takenAt).fromNow()}</p>
+                  <p>It made me feel {props.drug.feeling}</p>
+                </div>
+              }</p>
+            </div>
           </Paper>
         </Grid>
     </React.Fragment>
@@ -144,7 +163,7 @@ function MedicinePage() {
       <React.Fragment>
         {props.drugData && props.drugData.map(x => {
           return <FormItem 
-            drug={x.name} 
+            drug={x} 
         ></FormItem>
         })}
       </React.Fragment>
