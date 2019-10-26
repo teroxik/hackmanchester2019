@@ -19,6 +19,12 @@ service cloud.firestore {
       allow write: if false; // only written to by indexUser cloud function
     }
 
+        // Public user profiles
+    match /medicines {
+      allow read;
+      allow write: if false; // only written to by indexUser cloud function
+    }
+
     // Projects
     match /projects/{projectId} {
       // Only projects you own can be viewed
