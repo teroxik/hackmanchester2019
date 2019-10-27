@@ -60,7 +60,7 @@ export default compose(
           { collection: 'patients', doc: newInstance.number },
           {
             ...newInstance,
-            lastPod: 0,
+            lastPod: -1,
             pills: {
               0: { name: 'olmesartan' },
               1: { name: 'olmesartan' },
