@@ -76,6 +76,9 @@ const chunk = function(array, size) {
 
 const generateDrugGrid = (props) => {
   const {patient} = props;
+  if (!patient || !patient.pills){
+    return [];
+  }
   const pillsArray = Object.keys(patient.pills).sort().map(x => {return patient.pills[x]});
   return chunk(pillsArray, 3);
 }
