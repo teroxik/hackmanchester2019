@@ -28,11 +28,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-const GOOD = '😁';
-const OK = '😐';
-const BAD = '🤮';
-
 const drugList = [
   'atenolol',
   'alogliptin',
@@ -51,37 +46,11 @@ const drugList = [
   'perindopril'
 ];
 
-const feelingList = [
-  GOOD,
-  OK,
-  BAD
-];
-
-const pickRandomDrug = () => {
-  const name = drugList[Math.floor(Math.random()*drugList.length)];
-  const feeling = feelingList[Math.floor(Math.random()*feelingList.length)];
-  let takenAt = null;
-  if (Math.floor(Math.random() * 2) == 0){
-    const start = new Date().setDate(new Date().getDate() - 7);
-    const end = new Date();
-    takenAt = new Date(start + Math.random() * (end - start));  
-  }
-  const ret = {
-    name,
-    feeling,
-    takenAt
-  };
-  console.log(ret);
-  return ret;
-}
-const drugData1 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
-const drugData2 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
-const drugData3 = (() => {return [pickRandomDrug(), pickRandomDrug(), pickRandomDrug()]})();
-const drugDataGrid = [
-  drugData1,
-  drugData2,
-  drugData3
-];
+const feelings = {
+  "0": "🤮",
+  "1": "😐",
+  "2": "😁",
+};
 
 const doNHSCall = async (drug) => {
   if (!drug){
@@ -94,7 +63,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const chunk = function(array, size) {
+  if (!array.length) {
+    return [];
+  }
+  const head = array.slice(0, size);
+  const tail = array.slice(size);
 
+  return [head, ...chunk(tail, size)];
+};
+
+
+const generateDrugGrid = (props) => {
+  const {patient} = props;
+  const pillsArray = Object.keys(patient.pills).sort().map(x => {return patient.pills[x]});
+  return chunk(pillsArray, 3);
+}
 
 function MedicinePage(project) {
   
@@ -103,7 +87,7 @@ function MedicinePage(project) {
 
   const [open, setOpen] = React.useState(false);
   const [currentDrug, setCurrentDrug] = React.useState(null);
-
+  const drugGrid = generateDrugGrid(project);
   const handleClickOpen = (drug) => () => {
     setCurrentDrug(drug);
     setOpen(true);
@@ -141,17 +125,24 @@ function MedicinePage(project) {
           <Paper className={classes.paper} style={{
             'paddingTop':'50px', 
             'paddingBottom': '50px', 
-            'height': '100%'
+            'height': '100%',
+            'backgroundColor': (props.drug.correct !== false ? '' : 'red'),
             }}>
             <div>
               <p>{props.drug.name.charAt(0).toUpperCase() + props.drug.name.substring(1)}</p>
               <p>{
-                props.drug.takenAt && 
+                props.drug.taken && 
                 <div>
-                  <p>I took it {moment(props.drug.takenAt).fromNow()}</p>
-                  <p>It made me feel {props.drug.feeling}</p>
+                  <p>I {!props.drug.correct && 'wrongly'} took it {moment(props.drug.taken.toDate()).fromNow()}</p>
                 </div>
               }</p>
+              <p>{
+                props.drug.vote && 
+                <div>
+                  <p>It made me feel {feelings[props.drug.vote]}</p>
+                </div>
+              }</p>
+
             </div>
           </Paper>
         </Grid>
@@ -178,7 +169,7 @@ function MedicinePage(project) {
       My Medicines
       <div style={{'marginTop': '1em'}}></div>
       <Grid container spacing={1}>
-      {drugDataGrid.map(x => {
+      {drugGrid.map(x => {
         return <Grid container item xs={12} spacing={3}>
           <FormRow drugData={x}/>
         </Grid>

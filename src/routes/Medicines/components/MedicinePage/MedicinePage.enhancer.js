@@ -25,11 +25,10 @@ export default compose(
   ]),
   // Map projects from redux state to props
   connect(({ firestore: { data } }) => {
-    console.log(data);
     return ({
-      patients: get(data, `patients.447366975810`)
+      patient: get(data, `patients.447366975810`)
     })
   }),
   // Show loading spinner while project is loading
-  spinnerWhileLoading(['patients'])
+  spinnerWhileLoading(['patient'])
 )
