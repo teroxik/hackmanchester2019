@@ -81,6 +81,16 @@ function Home() {
             </li>
           </ul>
         </div>
+        <div className={classes.section}>
+          <h3>Team</h3>
+          <ul>
+            <li>Andrew Sim</li>
+            <li>Jan Machacek</li>
+            <li>Michal Janousek</li>
+            <li>Nick Blow</li>
+          </ul>
+          Get in touch - michal at purebrew.tech
+        </div>
       </div>
     </div>
   )
