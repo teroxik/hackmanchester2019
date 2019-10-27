@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom'
 import CoreLayout from '../layouts/CoreLayout'
 import Home from './Home'
 import LoginRoute from './Login'
-import MedicineRoute from './Medicines'
 import SignupRoute from './Signup'
 import PatientsRoute from './Patients'
 import AccountRoute from './Account'
@@ -20,7 +19,7 @@ export default function createRoutes(store) {
           PatientsRoute,
           SignupRoute,
           LoginRoute,
-          MedicineRoute
+
           /* Add More Routes Here */
         ].map((settings, index) => (
           <Route key={`Route-${index}`} {...settings} />
