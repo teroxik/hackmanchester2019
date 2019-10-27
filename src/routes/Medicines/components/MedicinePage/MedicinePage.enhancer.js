@@ -19,7 +19,7 @@ export default compose(
   firestoreConnect(() => [
     // Listener for projects the current user created
     {
-      collection: 'medicines',
+      collection: 'pacients',
       doc: 'test'
     }
   ]),
@@ -27,9 +27,9 @@ export default compose(
   connect(({ firestore: { data } }) => {
     console.log(data);
     return ({
-      project: get(data, `medicines.test`)
+      pacient: get(data, `paceints.test`)
     })
   }),
   // Show loading spinner while project is loading
-  spinnerWhileLoading(['project'])
+  spinnerWhileLoading(['pacient'])
 )

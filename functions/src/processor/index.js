@@ -21,12 +21,14 @@ export async function processorRequest(req, res) {
         const number = `+${patient.number}`
         console.log()
         if (lastPod || lastPod === 0) {
-          const medicine = patient[`taken${lastPod}`]
-          const vote = patient[`vote${lastPod}`]
-          if (!medicine) {
+          const medicineTaken =
+            patient.pills[lastPod] && patient.pills[lastPod].taken
+          const medicineVoted =
+            patient.pills[lastPod] && patient.pills[lastPod].voteTaken
+          if (!medicineTaken) {
            console.log('SendingT the sms')
            await sms.sendTakePillText(number, lastPod)
-          } else if (!vote) {
+          } else if (!medicineVoted) {
             console.log('Sending vote request')
             await sms.sendVoteText(number)
           }

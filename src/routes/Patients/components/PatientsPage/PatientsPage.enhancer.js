@@ -61,6 +61,18 @@ export default compose(
           {
             ...newInstance,
             lastPod: 0,
+            pills: {
+              0: { name: 'olmesartan' },
+              1: { name: 'olmesartan' },
+              2: { name: 'azithromycin' },
+              3: { name: 'heparinoid' },
+              4: { name: 'olmesartan' },
+              5: { name: 'olmesartan' },
+              6: { name: 'heparinoid' },
+              7: { name: 'olmesartan' },
+              8: { name: 'olmesartan' },
+              9: { name: 'heparinoid' }
+            },
             createdBy: uid,
             createdAt: firestore.FieldValue.serverTimestamp()
           }
