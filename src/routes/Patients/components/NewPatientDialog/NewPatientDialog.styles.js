@@ -7,5 +7,8 @@ export default theme => ({
   },
   buttons: {
     ...theme.flexColumnCenter
+  },
+  field: {
+    width: '20em'
   }
 })

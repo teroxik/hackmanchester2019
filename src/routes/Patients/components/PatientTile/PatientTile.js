@@ -9,7 +9,15 @@ import styles from './PatientTile.styles'
 
 const useStyles = makeStyles(styles)
 
-function PatientTile({ name, number, onSelect, onDelete, showDelete }) {
+function PatientTile({
+  name,
+  number,
+  period,
+  numberOfPods,
+  onSelect,
+  onDelete,
+  showDelete
+}) {
   const classes = useStyles()
 
   return (
@@ -29,6 +37,16 @@ function PatientTile({ name, number, onSelect, onDelete, showDelete }) {
       <div>
         <span className={classes.name} onClick={onSelect}>
           {number || 'No Number'}
+        </span>
+      </div>
+      <div>
+        <span className={classes.name} onClick={onSelect}>
+          {period || 'No Number'}
+        </span>
+      </div>
+      <div>
+        <span className={classes.name} onClick={onSelect}>
+          {numberOfPods || 'No Number'}
         </span>
       </div>
     </Paper>
