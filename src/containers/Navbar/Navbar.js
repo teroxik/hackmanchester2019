@@ -27,7 +27,7 @@ function Navbar({ history, firebase, auth, profile }) {
           to={authExists ? LIST_PATH : '/'}
           className={classes.brand}
           data-test="brand">
-          hackmanchester2019
+          Smart Pill Insights
         </Typography>
         <div className={classes.flex} />
         {authExists ? (

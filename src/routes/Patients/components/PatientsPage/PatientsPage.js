@@ -48,6 +48,8 @@ function PatientsPage({
                     key={`Panel-${patient.id}-${ind}`}
                     name={patient.name}
                     number={patient.number}
+                    period={patient.defaultPeriod}
+                    numberOfPods={patient.numberOfPods}
                     onSelect={() => goToPatient(patient.id)}
                     onDelete={() => deletePatient(patient.id)}
                   />

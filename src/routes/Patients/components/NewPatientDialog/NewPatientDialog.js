@@ -17,6 +17,7 @@ function NewPatientDialog({ classes, handleSubmit, open, onRequestClose }) {
         <DialogContent>
           <div>
             <Field
+              style={{ width: '20em' }}
               name="name"
               component={TextField}
               label="Patient Box Name"
@@ -25,9 +26,28 @@ function NewPatientDialog({ classes, handleSubmit, open, onRequestClose }) {
           </div>
           <div>
             <Field
+              style={{ width: '20em' }}
               name="number"
               component={TextField}
               label="Patient Number"
+              validate={[required]}
+            />
+          </div>
+          <div>
+            <Field
+              style={{ width: '20em' }}
+              name="numberOfPods"
+              label="Number of Pods in Box"
+              component={TextField}
+              validate={[required]}
+            />
+          </div>
+          <div>
+            <Field
+              style={{ width: '20em' }}
+              name="defaultPeriod"
+              component={TextField}
+              label="Default Period (ISO 8601)"
               validate={[required]}
             />
           </div>
