@@ -1,7 +1,10 @@
 import React from 'react'
+
 import { makeStyles } from '@material-ui/core/styles'
 import styles from './HomePage.styles'
 import patientCendredAproach from 'static/patient-centred-approach.png'
+import { LIST_PATH } from 'constants/paths'
+import { Link } from 'react-router-dom'
 
 const medication = 'https://www.england.nhs.uk/medicines/medicines-optimisation'
 const drugRecalls = 'https://github.com/mjrussell/redux-auth-wrapper'
@@ -20,6 +23,7 @@ function Home() {
             Two way communication platform for scheduled drug consumption via
             SMS with a feedback channel.
           </p>
+          <Link to={LIST_PATH}>Patients</Link>
         </div>
         <div className={classes.section}>
           <h2>Did you know? </h2>

@@ -35,19 +35,22 @@ function PatientTile({
         ) : null}
       </div>
       <div>
-        <span className={classes.name} onClick={onSelect}>
+        <label>Phone Number</label>
+        <div className={classes.name} onClick={onSelect}>
           {number || 'No Number'}
-        </span>
+        </div>
       </div>
       <div>
-        <span className={classes.name} onClick={onSelect}>
+        <label>Period </label>
+        <div onClick={onSelect} className={classes.name}>
           {period || 'No Number'}
-        </span>
+        </div>
       </div>
       <div>
-        <span className={classes.name} onClick={onSelect}>
-          {numberOfPods || 'No Number'}
-        </span>
+        <label># Pods</label>
+        <div onClick={onSelect} className={classes.name}>
+          {numberOfPods}
+        </div>
       </div>
     </Paper>
   )
