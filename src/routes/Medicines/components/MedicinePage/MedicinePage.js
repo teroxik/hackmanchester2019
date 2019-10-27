@@ -96,7 +96,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 
-function MedicinePage() {
+function MedicinePage(project) {
+  
   const classes = useStyles();
   const [medicineCache, setMedicineData] = useState({});
 
