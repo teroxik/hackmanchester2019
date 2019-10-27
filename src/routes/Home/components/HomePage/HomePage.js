@@ -3,6 +3,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import styles from './HomePage.styles'
 import patientCendredAproach from 'static/patient-centred-approach.png'
+import pillbox from 'static/PillBox.jpg'
+import pillboxCss from 'static/PillBoxCss.jpg'
 import { LIST_PATH } from 'constants/paths'
 import { Link } from 'react-router-dom'
 
@@ -24,8 +26,6 @@ function Home() {
             SMS with a feedback channel.
           </p>
           <Link to={LIST_PATH}>Patients</Link>
-        </div>
-        <div className={classes.section}>
           <h2>Did you know? </h2>
           <ul>
             <li>One quarter of the population has a long-term condition</li>
@@ -42,6 +42,13 @@ function Home() {
               are not taken as intended
             </li>
           </ul>
+          <div className={classes.section}>
+            <img
+              className={classes.patientApproach}
+              src={patientCendredAproach}
+              alt=""
+            />
+          </div>
         </div>
         <h3>Core Features</h3>
         <ul>
@@ -52,15 +59,13 @@ function Home() {
             of the patients or to monitor consumption.
           </li>
         </ul>
+        <h3>Pillbox with CSS</h3>
+        <img className={classes.patientApproach} src={pillboxCss} alt="" />
+        <h3>Pillbox without CSS</h3>
+        <img className={classes.patientApproach} src={pillbox} alt="" />
+
       </div>
       <div className="flex-row-center">
-        <div className={classes.section}>
-          <img
-            className={classes.patientApproach}
-            src={patientCendredAproach}
-            alt=""
-          />
-        </div>
         <div className={classes.section}>
           <h3>Drugs Related Information and References</h3>
           <ul>
