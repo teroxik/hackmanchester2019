@@ -71,7 +71,6 @@ export default compose(
               6: { name: 'heparinoid' },
               7: { name: 'olmesartan' },
               8: { name: 'olmesartan' },
-              9: { name: 'heparinoid' }
             },
             createdBy: uid,
             createdAt: firestore.FieldValue.serverTimestamp()
