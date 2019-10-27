@@ -27,7 +27,7 @@ export async function processorRequest(req, res) {
             patient.pills[lastPod] && patient.pills[lastPod].voteTaken
           if (!medicineTaken) {
            console.log('SendingT the sms')
-           await sms.sendTakePillText(number, lastPod)
+           await sms.sendTakePillText(number, lastPod + 1)
           } else if (!medicineVoted) {
             console.log('Sending vote request')
             await sms.sendVoteText(number)
