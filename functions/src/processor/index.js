@@ -14,19 +14,21 @@ export async function processorRequest(req, res) {
     .collection(`/patients`)
     .get()
     .then(async snpsht => {
-      for (let doc of snpsht) {
+      for (let doc of snpsht.docs) {
         // doc.data() is never undefined for query doc snapshots
         const patient = doc.data()
-        const lastPod = doc.lastPod
+        const lastPod = patient.lastPod
         const number = `+${patient.number}`
-
+        console.log()
         if (lastPod || lastPod === 0) {
-          const medicine = doc[`taken${lastPod}`]
-          const vote = doc[`vote${lastPod}`]
-          if (!medicine) {
+          const medicineTaken =
+            patient.pills[lastPod] && patient.pills[lastPod].taken
+          const medicineVoted =
+            patient.pills[lastPod] && patient.pills[lastPod].voteTaken
+          if (!medicineTaken) {
            console.log('SendingT the sms')
            await sms.sendTakePillText(number, lastPod)
-          } else if (!vote) {
+          } else if (!medicineVoted) {
             console.log('Sending vote request')
             await sms.sendVoteText(number)
           }

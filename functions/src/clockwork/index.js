@@ -46,10 +46,8 @@ const takenRightPod = async (podNumber, number) => {
   const docRef = db.collection('patients').doc(`${number}`)
 
   return docRef.update({
-    [`taken${podNumber}`]: {
-      correct: true,
-      timestamp: new Date()
-    }
+    [`pills.${podNumber}.correct`]: true,
+    [`pills.${podNumber}.taken`]: new Date()
   })
 }
 
@@ -58,10 +56,8 @@ const takenWrongPod = async (podNumber, number) => {
   const docRef = db.collection('patients').doc(`${number}`)
 
   return docRef.update({
-    [`taken${podNumber}`]: {
-      correct: false,
-      timestamp: new Date()
-    }
+    [`pills.${podNumber}.correct`]: false,
+    [`pills.${podNumber}.taken`]: new Date()
   })
 }
 
@@ -72,10 +68,8 @@ const hasVoted = async (voteNumber, number) => {
   docRef.get().then(doc => {
     const patient = doc.data()
     docRef.update({
-      [`vote${patient.lastPod}`]: {
-        vote: voteNumber,
-        timestamp: new Date()
-      },
+      [`pills.${patient.lastPod}.vote`]: voteNumber,
+      [`pills.${patient.lastPod}.voteTaken`]: new Date(),
       lastPod: admin.firestore.FieldValue.increment(1)
     })
   })
