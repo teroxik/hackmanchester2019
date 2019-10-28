@@ -63,7 +63,6 @@ function Home() {
         <img className={classes.patientApproach} src={pillboxCss} alt="" />
         <h3>Pillbox without CSS</h3>
         <img className={classes.patientApproach} src={pillbox} alt="" />
-
       </div>
       <div className="flex-row-center">
         <div className={classes.section}>
